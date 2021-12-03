@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 
 import frc.robot.subsystems.*;
-
+import frc.robot.commands.*;
 import static frc.robot.Constants.*;
 
 /**
@@ -24,11 +24,14 @@ import static frc.robot.Constants.*;
 public class RobotContainer {
   // JOYSTICK
   public final Joystick driver = new Joystick(DRIVER_CONTROLLER);
+  public final Joystick operator = new Joystick(OPERATOR_CONTROLLER);
 
   // -- BUTTONS --
-
+  public final JoystickButton pistonExtendButton = new JoystickButton(operator, BUTTON_X), 
+    pistonRetractButton = new JoystickButton(operator, BUTTON_B);
   // SUBSYSTEMS
   public final Drivetrain DRIVETRAIN = new Drivetrain();
+  public final PistonSystem PISTONSYSTEM = new PistonSystem();
 
   //Commands
   //private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -52,6 +55,9 @@ public class RobotContainer {
         DRIVETRAIN
       )
     );
+    pistonExtendButton.whenHeld(new PistonExtend(PISTONSYSTEM));
+    pistonRetractButton.whenHeld(new PistonRetract(PISTONSYSTEM));
+
     
 
   /**
